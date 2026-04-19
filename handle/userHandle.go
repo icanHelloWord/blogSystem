@@ -48,7 +48,7 @@ func (handle *UserHandle) Register(c *gin.Context) {
 		return
 	}
 
-	if err := handle.userService.Register(&req); err != nil {
+	if err := handle.userService.Register(c, &req); err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
 		return
 	}

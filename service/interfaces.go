@@ -10,7 +10,7 @@ import (
 type UserService interface {
 	Login(c *gin.Context, req *dto.UserLoginReq) (string, error)
 
-	Register(req *dto.UserLoginReq) error
+	Register(c *gin.Context, req *dto.UserLoginReq) error
 }
 
 type PostsService interface {

@@ -3,6 +3,7 @@ package service
 import (
 	"blogSystem/config"
 	"blogSystem/dto"
+	"blogSystem/middle"
 	"blogSystem/model"
 	"blogSystem/repository"
 	"errors"
@@ -53,14 +54,19 @@ func (userService *userService) Login(c *gin.Context, req *dto.UserLoginReq) (st
 	return tokenString, nil
 }
 
-func (userService *userService) Register(userRegister *dto.UserLoginReq) error {
+func (userService *userService) Register(c *gin.Context, userRegister *dto.UserLoginReq) error {
+	db := middle.GetDBFromContext(c)
+	tx := db.Begin()
+	//有多表操作的话，开启事务
 	userRepo := userService.userRepo
 	userCheck, err := userRepo.GetUserByUserName(userRegister.Username)
 	if err != nil {
+		tx.Rollback()
 		return err
 	}
 
 	if userCheck != nil {
+		tx.Rollback()
 		return errors.New("用户名已经存在")
 	}
 
@@ -69,12 +75,15 @@ func (userService *userService) Register(userRegister *dto.UserLoginReq) error {
 	user.Email = userRegister.Email
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(userRegister.Password), bcrypt.DefaultCost)
 	if err != nil {
+		tx.Rollback()
 		return err
 	}
 	user.Password = string(hashedPassword)
 	errCreate := userRepo.Create(&user)
 	if err != nil {
+		tx.Rollback()
 		return errCreate
 	}
+	tx.Commit()
 	return nil
 }

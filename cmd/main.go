@@ -33,6 +33,7 @@ func main() {
 	postsService := service.NewPostsService(postsRepo)
 	postsHandler := handle.NewPostsHandler(postsService)
 
+	router.Use(middle.DbMiddle(db))
 	//注册
 	router.POST("/register", userHandler.Register)
 	//登录
