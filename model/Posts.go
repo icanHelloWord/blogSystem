@@ -22,7 +22,7 @@ type Posts struct {
 	UserID     int       `gorm:"column:user_id;not null;index" json:"userId"`
 	CreateDate time.Time `gorm:"column:create_date;autoCreateTime" json:"createDate"`
 	UpdateDate time.Time `gorm:"column:update_date;autoUpdateTime" json:"updateDate"`
-	IsDeleted  int8      `gorm:"column:is_deleted;type:tinyint(1);default:1" json:"is_deleted"` // 删除标记 0:删除,1:未删除
+	IsDeleted  int8      `gorm:"column:is_deleted;type:tinyint(1);default:1" json:"isDeleted"` // 删除标记 0:删除,1:未删除
 }
 
 // TableName 指定表名

@@ -22,3 +22,13 @@ type PostsRepository interface {
 
 	Update(posts *dto.UpdatePostsReq) error
 }
+
+type CommentRepository interface {
+	Create(comment *model.Comment) error
+
+	CommentList(commentListReq *dto.CommentListReq) []model.Comment
+
+	Delete(id int) error
+
+	FindById(id int) (model.Comment, error)
+}

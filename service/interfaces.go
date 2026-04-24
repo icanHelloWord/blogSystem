@@ -22,3 +22,11 @@ type PostsService interface {
 
 	UpdatePosts(posts *dto.UpdatePostsReq) error
 }
+
+type CommentService interface {
+	AddComment(comment *dto.AddCommentReq) error
+
+	CommentList(commentListReq *dto.CommentListReq) []model.Comment
+
+	Delete(id int, userID int) error
+}
