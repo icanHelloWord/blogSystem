@@ -1,3 +1,15 @@
+环境
+go version go1.26.1 windows/amd64
+goroot D:\developTools\gdk1.26\go
+gopath D:\project\goproject
+
+运行方式 
+go run cmd/main.go
+
+数据库
+mysql
+
+建表脚本
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(25) DEFAULT NULL COMMENT '用户名',
